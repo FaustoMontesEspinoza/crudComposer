@@ -1,0 +1,22 @@
+{
+    "name": "fausto/crud-composer",
+    "description": "Crud MVC, PDO, POO, AJAX, MYSQL, COMPOSER",
+    "type": "project",
+    "require": {
+        "bramus/router": "^1.6",
+        "vlucas/phpdotenv": "^5.4"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Fausto\\CrudComposer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fausto Montes",
+            "email": "faustomontesespinoza@gmail.com"
+        }
+    ],
+    "minimum-stability": "alpha"
+}
