@@ -9,6 +9,7 @@ $router->setNamespace('Fausto\CrudComposer\controllers');
 
 $router->get('/','Usuario@index');
 
+$router->post('/usuarios','Usuario@getAll');
 
 $router->set404('Error@error');
 

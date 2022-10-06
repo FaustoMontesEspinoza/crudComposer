@@ -3,7 +3,10 @@ $(document).ready(function () {
         "processing":true,
         "serverSide":true,
         "order":[],
-        
+        "ajax":{
+            url: "usuarios",
+            type: "POST"
+        },
         "columnsDefs":[
             {
             "targets":[0, 3, 4],
