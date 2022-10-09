@@ -22,7 +22,7 @@
             <div class="col-2 offset-10">
                 <div class="text-center">
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modalUsuario" id="botonCrear">
+                    <button type="button" class="btn btn-primary w-100" id="crearUsuario">
                         <i class="bi bi-plus-circle-fill"></i> Crear
                     </button>
                 </div>
@@ -50,9 +50,15 @@
         </div>
     </div>
 
+    <div class="modal" tabindex="-1" role="dialog" id="mi-modal">
+    <div class="modal-dialog modal-lg" role="document">
+      
+    </div>                      
+  </div>
+
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="<?php echo BOOTSTRAP . 'js/bootstrap.bundle.min.js' ?>"></script>
     <script src="<?php echo JS . 'jquery-3.6.0.min.js' ?>"></script>
+    <script src="<?php echo BOOTSTRAP . 'js/bootstrap.bundle.min.js' ?>"></script>
     <script src="<?php echo JS . 'sweetalert2.all.min.js' ?>"></script>
     <script src="<?php echo JS . 'jquery.dataTables.min.js' ?>"></script>
     <script src="<?php echo JS . 'dataTables.bootstrap4.min.js' ?>"></script>

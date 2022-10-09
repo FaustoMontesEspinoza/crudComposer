@@ -15,13 +15,13 @@ class Usuario extends View
     public function getAll()
     {
         $usu = new ModelsUsuario();
-        $data=[];
+        $data = [];
         $datos = [];
         //si la varible es nula o no esta definida
         if (!isset($_POST["search"]["value"])) {
-            $data =$usu->obtenerUsuarios();            
-        }else{
-            $data=$usu->obtenerXnombreApellido($_POST["search"]["value"]);
+            $data = $usu->obtenerUsuarios();
+        } else {
+            $data = $usu->obtenerXnombreApellido($_POST["search"]["value"]);
         }
 
         foreach ($data as $usuario) {
@@ -55,5 +55,15 @@ class Usuario extends View
 
         /*  var_dump($datos); */
         echo json_encode($salida);
+    }
+
+    public function create()
+    {
+        $this->render('agregarUsuario');
+    }
+
+    public function store()
+    {
+        
     }
 }

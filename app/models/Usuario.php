@@ -51,6 +51,23 @@ class Usuario
         }
     }
 
+    public function agrgarUsuario(){
+        try {
+            $query = $this->db->connect()->prepare('INSERT INTO usuarios (nombre, apellidos, imagen, telefono, email) VALUES (:nombre, :apellidos, :imagen, :telefono, :email)');
+            $query->execute([
+                'nombre'=>$this->nombre,
+                'apellidos'=>$this->apellidos,
+                'imagen'=>$this->imagen,
+                'telefono'=>$this->telefono,
+                'email'=>$this->email
+            ]);
+
+            return true;
+        } catch (PDOException $e) {
+            //throw $th;
+        }
+    }
+
     public function setId(int $id)
     {
         $this->id = $id;
