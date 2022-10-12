@@ -41,11 +41,6 @@ $(document).ready(function () {
       $("#mi-modal").modal();
       $("#crear").click(function (e) {
         e.preventDefault();
-        /* var nombre = $("#nombre").val();
-        var apellido = $("#apellidos").val();
-        var telefono = $("#telefono").val();
-        var email = $("#email").val();
-        var extension = $("#imagen_usuario").val().split(".").pop().toLowerCase(); */
         let form = $("#formularioUsuario");
         let data = new FormData(form.get(0));
         let extension = $("#imagen_usuario")
@@ -75,11 +70,22 @@ $(document).ready(function () {
             contentType: false,
             processData: false,
             success: function (response) {
-              console.log(response);
+              $("#formularioUsuario")[0].reset();
+              $("#mi-modal").modal("hide");
+              dataTable.ajax.reload();
             },
           });
         }
       });
+    });
+  });
+
+  $("#datos_usuario").on("click", ".editar", function (e) {
+    e.preventDefault();
+    let id = this.id;
+    $(".modal-dialog").load("usuarios/"+id, function () {
+      $("#mi-modal").modal();
+      
     });
   });
 });

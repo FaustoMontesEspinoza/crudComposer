@@ -35,13 +35,14 @@ class Usuario
         }
     }
 
-    public function obtenerXnombreApellido(string $valor)
-    {
+    public function obtenerUsuariosDatatables(array $valor){
         try {
-            $query = $this->db->connect()->prepare('SELECT * FROM usuarios WHERE nombre LIKE :valor OR apellidos like :valor1');
+            $query = $this->db->connect()->prepare('SELECT * FROM usuarios WHERE nombre LIKE :valor OR apellidos LIKE :valor1 ORDER BY '.$valor[1].' '.$valor[2].' LIMIT :valor2,:valor3');
             $query->execute([
-                'valor' => '%'.$valor.'%',
-                'valor1' => '%'.$valor.'%'
+                'valor' => '%'.$valor[0].'%',
+                'valor1' => '%'.$valor[0].'%',
+                'valor2' => $valor[3],
+                'valor3' => $valor[4]
             ]);
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
             return $data;
@@ -51,7 +52,54 @@ class Usuario
         }
     }
 
-    public function agrgarUsuario(){
+    public function obtenerXId()
+    {
+        try {
+            $query = $this->db->connect()->prepare('SELECT * FROM usuarios WHERE id =:valor');
+            $query->execute([
+                'valor' =>  $this->id
+            ]);
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
+    public function obtenerXordenColumDir(string $orderColum, string $orderdir)
+    {
+        try {
+            $query = $this->db->connect()->prepare('SELECT * FROM usuarios ORDER BY :valor :valor1');
+            $query->execute([
+                'valor' => $orderColum,
+                'valor1' => $orderdir
+            ]);
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
+    public function obtenerXlenght(string $start, string $len)
+    {
+        try {
+            $query = $this->db->connect()->prepare('SELECT * FROM usuarios LIMIT :valor,:valor1');
+            $query->execute([
+                'valor' => $start,
+                'valor1' => $len
+            ]);
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
+    public function agregarUsuario(){
         try {
             $query = $this->db->connect()->prepare('INSERT INTO usuarios (nombre, apellidos, imagen, telefono, email) VALUES (:nombre, :apellidos, :imagen, :telefono, :email)');
             $query->execute([

@@ -15,6 +15,8 @@ $router->post('/usuarios','Usuario@getAll');
 
 $router->post('/usuarios/crear','Usuario@store');
 
+$router->get('/usuarios/{id}','Usuario@viewUsuario');
+
 $router->set404('Error@error');
 
 $router->run();
