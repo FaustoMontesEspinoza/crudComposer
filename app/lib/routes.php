@@ -15,6 +15,10 @@ $router->post('/usuarios','Usuario@getAll');
 
 $router->post('/usuarios/crear','Usuario@store');
 
+$router->post('/usuarios/actualizar/{id}','Usuario@actualizar');
+
+$router->delete('/usuarios/eliminar/{id}', 'Usuario@eliminar');
+
 $router->get('/usuarios/{id}','Usuario@viewUsuario');
 
 $router->set404('Error@error');

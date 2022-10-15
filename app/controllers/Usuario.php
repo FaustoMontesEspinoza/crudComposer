@@ -70,8 +70,12 @@ class Usuario extends View
         $usu = new ModelsUsuario();
         $usu->setNombre($_POST["nombre"]);
         $usu->setApellidos($_POST["apellidos"]);
-        $imagen = $this->storeImage($_FILES['imagen_usuario']);
-        $usu->setImagen($imagen);
+        if ($_FILES["imagen_usuario"]["name"]!='') {
+            $imagen = $this->storeImage($_FILES['imagen_usuario']);
+            $usu->setImagen($imagen);
+        }else {
+            $usu->setImagen('');
+        }
         $usu->setTelefono($_POST['telefono']);
         $usu->setEmail($_POST['email']);
         if ($usu->agregarUsuario()) {
@@ -84,6 +88,29 @@ class Usuario extends View
         $usu->setId(intval($id));
         $usuar = $usu->obtenerXId();
         $this->render('actualizarUsuario',['usua'=>$usuar]);
+    }
+
+    public function actualizar($id){
+        
+        $usu = new ModelsUsuario();
+        $usu->setId(intval($id));
+        $usu->setNombre($_POST["nombre"]);
+        $usu->setApellidos($_POST["apellidos"]);
+        if ($_FILES["imagen_usuario"]["name"]!='') {
+            $imagen = $this->storeImage($_FILES['imagen_usuario']);
+            $usu->setImagen($imagen);
+        }
+        $usu->setTelefono($_POST['telefono']);
+        $usu->setEmail($_POST['email']);
+        if ($usu->update()) {
+            echo 'exito';
+        }
+    }
+
+    public function eliminar($id){
+        $usu = new ModelsUsuario();
+        $usu->setId(intval($id));
+        $usu->eliminar();
     }
 
     private function storeImage(array $photo)

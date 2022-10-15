@@ -35,12 +35,13 @@ class Usuario
         }
     }
 
-    public function obtenerUsuariosDatatables(array $valor){
+    public function obtenerUsuariosDatatables(array $valor)
+    {
         try {
-            $query = $this->db->connect()->prepare('SELECT * FROM usuarios WHERE nombre LIKE :valor OR apellidos LIKE :valor1 ORDER BY '.$valor[1].' '.$valor[2].' LIMIT :valor2,:valor3');
+            $query = $this->db->connect()->prepare('SELECT * FROM usuarios WHERE nombre LIKE :valor OR apellidos LIKE :valor1 ORDER BY ' . $valor[1] . ' ' . $valor[2] . ' LIMIT :valor2,:valor3');
             $query->execute([
-                'valor' => '%'.$valor[0].'%',
-                'valor1' => '%'.$valor[0].'%',
+                'valor' => '%' . $valor[0] . '%',
+                'valor1' => '%' . $valor[0] . '%',
                 'valor2' => $valor[3],
                 'valor3' => $valor[4]
             ]);
@@ -67,52 +68,66 @@ class Usuario
         }
     }
 
-    public function obtenerXordenColumDir(string $orderColum, string $orderdir)
+    public function agregarUsuario()
     {
-        try {
-            $query = $this->db->connect()->prepare('SELECT * FROM usuarios ORDER BY :valor :valor1');
-            $query->execute([
-                'valor' => $orderColum,
-                'valor1' => $orderdir
-            ]);
-            $data = $query->fetchAll(PDO::FETCH_ASSOC);
-            return $data;
-        } catch (PDOException $e) {
-            error_log($e->getMessage());
-            return false;
-        }
-    }
-
-    public function obtenerXlenght(string $start, string $len)
-    {
-        try {
-            $query = $this->db->connect()->prepare('SELECT * FROM usuarios LIMIT :valor,:valor1');
-            $query->execute([
-                'valor' => $start,
-                'valor1' => $len
-            ]);
-            $data = $query->fetchAll(PDO::FETCH_ASSOC);
-            return $data;
-        } catch (PDOException $e) {
-            error_log($e->getMessage());
-            return false;
-        }
-    }
-
-    public function agregarUsuario(){
         try {
             $query = $this->db->connect()->prepare('INSERT INTO usuarios (nombre, apellidos, imagen, telefono, email) VALUES (:nombre, :apellidos, :imagen, :telefono, :email)');
             $query->execute([
-                'nombre'=>$this->nombre,
-                'apellidos'=>$this->apellidos,
-                'imagen'=>$this->imagen,
-                'telefono'=>$this->telefono,
-                'email'=>$this->email
+                'nombre' => $this->nombre,
+                'apellidos' => $this->apellidos,
+                'imagen' => $this->imagen,
+                'telefono' => $this->telefono,
+                'email' => $this->email
             ]);
 
             return true;
         } catch (PDOException $e) {
-            //throw $th;
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
+    public function update()
+    {
+        try {
+            if (!isset($this->imagen)) {
+                $query = $this->db->connect()->prepare('UPDATE usuarios SET nombre = :nombre, apellidos = :apellidos, telefono = :telefono, email = :email WHERE id = :id');
+                $query->execute([
+                    'id' => $this->id,
+                    'nombre' => $this->nombre,
+                    'apellidos' => $this->apellidos,
+                    'telefono' => $this->telefono,
+                    'email' => $this->email
+                ]);
+            } else {
+                $query = $this->db->connect()->prepare('UPDATE usuarios SET nombre = :nombre, apellidos = :apellidos, imagen = :imagen , telefono = :telefono, email = :email WHERE id = :id');
+                $query->execute([
+                    'id' => $this->id,
+                    'nombre' => $this->nombre,
+                    'apellidos' => $this->apellidos,
+                    'imagen' => $this->imagen,
+                    'telefono' => $this->telefono,
+                    'email' => $this->email
+                ]);
+            }
+
+            return true;
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+    }
+
+    public function eliminar(){
+        try {
+            $query = $this->db->connect()->prepare('DELETE FROM usuarios WHERE id = :id');
+            $query->execute([
+                'id' => $this->id
+            ]);
+            return true;
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
         }
     }
 

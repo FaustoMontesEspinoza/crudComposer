@@ -6,12 +6,13 @@
         </button>
     </div>
 
-    <form method="POST" id="formularioUsuario" enctype="multipart/form-data">
+    <form method="POST" id="formularioUsuActualizar" enctype="multipart/form-data">
         <div class="modal-content">
         <?php $usuarios =$this->d['usua']; ?>
             <div class="modal-body">
                 <?php foreach ($usuarios as $usuario) { ?>
                 <label for="nombre">Ingrese el nombre</label>
+                <input type="hidden" name="idusu" id="idusu" value="<?php echo $usuario['id']?>">
                 <input type="text" name="nombre" id="nombre" class="form-control" value="<?php echo $usuario['nombre']?>">
                 <br />
 
@@ -29,8 +30,9 @@
 
                 <label for="imagen">Seleccione una imagen</label>
                 <input type="file" name="imagen_usuario" id="imagen_usuario" class="form-control">
-                <span id="imagen_subida"></span>
-                <img src="app/assets/img/<?php echo $usuario['imagen'] ?>" class="img-thumbnail" width="50" height="35">
+                <?php if ($usuario['imagen']!='') {?>
+                    <img src="app/assets/img/<?php echo $usuario['imagen'] ?>" class="img-thumbnail" width="50" height="35">
+                <?php } ?>
                 <br />
                 <?php }?>
             </div>
