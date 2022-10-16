@@ -57,11 +57,21 @@ $(document).ready(function () {
         }
         if (extension != "") {
           if (jQuery.inArray(extension, ["gif", "png", "jpg", "jpeg"]) == -1) {
-            console.log("formato invalido");
+            $(".modal-header").after(`<div class="text-center text-danger" id="notis">
+            <h5>Formato de imagen invalido</h5>
+            </div>`)
+            setTimeout(function(){
+              $('#notis').remove();
+            },2000);
           }
         }
         if (erros > 0) {
-          console.log("Campos incompletos");
+          $(".modal-header").after(`<div class="text-center text-danger" id="noti">
+          <h5>Datos incompletos</h5>
+          </div>`)
+          setTimeout(function(){
+            $('#noti').remove();
+          },2000);
         } else {
           $.ajax({
             type: "post",
@@ -72,6 +82,12 @@ $(document).ready(function () {
             success: function (response) {
               $("#formularioUsuario")[0].reset();
               $("#mi-modal").modal("hide");
+              Swal.fire({
+                icon: "success",
+                title: "Usuario creado",
+                showConfirmButton: false,
+                timer: 1500,
+              });
               dataTable.ajax.reload();
             },
           });
@@ -103,11 +119,21 @@ $(document).ready(function () {
         }
         if (extension != "") {
           if (jQuery.inArray(extension, ["gif", "png", "jpg", "jpeg"]) == -1) {
-            console.log("formato invalido");
+            $(".modal-header").after(`<div class="text-center text-danger" id="notis">
+            <h5>Formato de imagen invalido</h5>
+            </div>`)
+            setTimeout(function(){
+              $('#notis').remove();
+            },2000);
           }
         }
         if (erros > 0) {
-          console.log("Campos incompletos");
+          $(".modal-header").after(`<div class="text-center text-danger" id="noti">
+          <h5>Datos incompletos</h5>
+          </div>`)
+          setTimeout(function(){
+            $('#noti').remove();
+          },2000);
         } else {
           $.ajax({
             type: "post",
@@ -117,6 +143,12 @@ $(document).ready(function () {
             processData: false,
             success: function (response) {
               $("#mi-modal").modal("hide");
+              Swal.fire({
+                icon: "success",
+                title: "Actualizado correctamente",
+                showConfirmButton: false,
+                timer: 1500,
+              });
               dataTable.ajax.reload();
             },
           });
@@ -128,12 +160,26 @@ $(document).ready(function () {
   $("#datos_usuario").on("click", ".borrar", function (e) {
     e.preventDefault();
     let id = this.id;
-    $.ajax({
-      type: "DELETE",
-      url: "usuarios/eliminar/" + id,
-      success: function (response) {
-        dataTable.ajax.reload();
-      },
+    Swal.fire({
+      title: "¿Está seguro?",
+      text: "¡No podrás revertir esto!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
+      confirmButtonText: "Si eliminar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          type: "DELETE",
+          url: "usuarios/eliminar/" + id,
+          success: function (response) {
+            dataTable.ajax.reload();
+          },
+        });
+        Swal.fire("¡Eliminado!", "Su usuario ha sido eliminado.", "success");
+      }
     });
   });
 });
